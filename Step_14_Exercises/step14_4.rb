@@ -1,16 +1,12 @@
-@students = [] # an empty array accessible to all methods
+@students = [] 
 
 def input_students
   puts "Please enter the names of students"
   puts "To finish, just hit return twice"
-  # get the first name
   name = STDIN.gets.chomp
-  # while the name is not empty repeat this code
   while !name.empty? do
-    # add the student hash to the array
     @students << {name: name, cohort: :november}
     puts "Now we have #{@students.count} students"
-    # get another name from user
     name = STDIN.gets.chomp
   end
 end
@@ -20,7 +16,7 @@ def print_menu
   puts "2. Show the students"
   puts "3. Save the list to students.csv"
   puts "4. Load the list from students.csv"
-  puts "9. Exit" # 9 because we'll be adding more items
+  puts "9. Exit"
 end
 
 def show_students
@@ -39,24 +35,27 @@ end
 def process(selection)
   case selection
   when "1"
+   puts "1 selected"
     input_students
   when "2"
+    puts "2 selected"
     show_students
   when "3"
+    puts "3 selected"
     save_students
   when "4"
+    puts "4 selected"
     load_students
   when "9"
-    exit # this will cause program to terminate
+    puts "9 selected"
+    exit
   else
     puts "I don't know what you meant, try again"
   end
 end
 
 def save_students
-  # open the file for writing
   file = File.open("students.csv", "w")
-  # iterate over the array of students
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(",")
@@ -75,14 +74,14 @@ def load_students(filename = "students.csv")
 end
 
 def try_load_students
-  filename = ARGV.first # first argument from the command line
-  return if filename.nil? # get out of the method if it isin't given
-  if File.exists?(filename) # if it exist
+  filename = ARGV.first
+  return if filename.nil?
+  if File.exists?(filename)
     load_students(filename)
     puts "Loaded #{@students.count} from #{filename}"
-  else # if it doesn't exist
+  else 
     puts "Sorry, #{filename} doesn't exist."
-    exit # quit the program
+    exit
   end
 end
 
